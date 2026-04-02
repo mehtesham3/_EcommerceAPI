@@ -17,8 +17,8 @@ export default {
     connection: {
       host: process.env.DB_HOST || "127.0.0.1",
       user: process.env.DB_USER || "postgres",
-      password: process.env.PASSWORD || "Angelica1!",
-      database: process.env.DB || "_ecommerce_test"
+      password: process.env.PASSWORD || "postgres",
+      database: process.env.DB || "ecommerce_test"
     },
     migrations: {
       directory: './migrations'
