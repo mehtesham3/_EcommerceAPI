@@ -1,3 +1,4 @@
+import db from '../db.js';
 import { app, redisClient } from '../index.js'
 import request from 'supertest';
 
