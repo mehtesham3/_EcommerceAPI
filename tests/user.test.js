@@ -1,12 +1,14 @@
 import db from "../db.js";
-import { app } from "../index.js";
+import { app, redisClient } from "../index.js";
 import request from "supertest";
 
 beforeAll(async () => {
   await db("users").del();
-
 });
-beforeEach(async () => {
+
+afterAll(async () => {
+  await db.destroy(); // closes knex connection
+  await redisClient.quit();
 });
 
 describe('User Autherntication', () => {

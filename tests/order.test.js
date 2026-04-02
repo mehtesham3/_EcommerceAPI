@@ -59,6 +59,11 @@ beforeAll(async () => {
     id: adminLogin.body.id
   }
 
+  afterAll(async () => {
+    await db.destroy(); // closes knex connection
+    await redisClient.quit();
+  });
+
   const product1 = await request(app).post("/product/create").set("Authorization", `Bearer ${vendor.token}`).send({
     name: "Test Product 1",
     description: "This is a test product 1",

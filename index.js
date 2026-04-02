@@ -54,9 +54,11 @@ app.get("/health", async (req, res) => {
   }
 });
 
-app.listen(process.env.PORT, () => {
-  // console.log(`Server is running on port http://localhost:${process.env.PORT}`);
-  logger.info(`Server started on port ${process.env.PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(process.env.PORT, () => {
+    // console.log(`Server is running on port http://localhost:${process.env.PORT}`);
+    logger.info(`Server started on port ${process.env.PORT}`);
+  });
+}
 
 export { redisClient, app };

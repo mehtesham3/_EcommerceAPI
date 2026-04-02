@@ -64,6 +64,11 @@ beforeAll(async () => {
   global.adminId = adminId;
 });
 
+afterAll(async () => {
+  await db.destroy(); // closes knex connection
+  await redisClient.quit();
+});
+
 describe('Product Routes', () => {
   it('should create a new product', async () => {
     const response = await request(app).post("/product/create").set("Authorization", `Bearer ${vendorToken}`).send({

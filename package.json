@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --runInBand --verbose",
+    "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --detectOpenHandles --forceExit --runInBand --verbose",
     "migrate:test": "knex migrate:latest --env test",
     "rollback:test": "knex migrate:rollback --env test",
     "start": "node index.js",
