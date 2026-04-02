@@ -1,4 +1,4 @@
-import { app } from '../index.js'
+import { app, redisClient } from '../index.js'
 import request from 'supertest';
 
 beforeAll(async () => {
@@ -59,11 +59,6 @@ beforeAll(async () => {
     id: adminLogin.body.id
   }
 
-  afterAll(async () => {
-    await db.destroy(); // closes knex connection
-    await redisClient.quit();
-  });
-
   const product1 = await request(app).post("/product/create").set("Authorization", `Bearer ${vendor.token}`).send({
     name: "Test Product 1",
     description: "This is a test product 1",
@@ -107,6 +102,15 @@ beforeAll(async () => {
   global.orderId = orderId;
 
 })
+
+afterAll(async () => {
+  await db.destroy(); // closes knex connection
+  try {
+    if (redisClient) await redisClient.quit();
+  } catch (err) {
+    console.log("Redis not connected");
+  }
+});
 
 describe('Order API', () => {
   it('should create a new order successfully', async () => {

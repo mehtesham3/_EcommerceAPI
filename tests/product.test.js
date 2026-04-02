@@ -1,5 +1,5 @@
 import db from "../db.js";
-import { app } from "../index.js";
+import { app, redisClient } from "../index.js";
 import request from "supertest";
 
 beforeAll(async () => {
@@ -66,7 +66,11 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await db.destroy(); // closes knex connection
-  await redisClient.quit();
+  try {
+    if (redisClient) await redisClient.quit();
+  } catch (err) {
+    console.log("Redis not connected");
+  }
 });
 
 describe('Product Routes', () => {

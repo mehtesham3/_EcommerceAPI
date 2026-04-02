@@ -8,7 +8,11 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await db.destroy(); // closes knex connection
-  await redisClient.quit();
+  try {
+    if (redisClient) await redisClient.quit();
+  } catch (err) {
+    console.log("Redis not connected");
+  }
 });
 
 describe('User Autherntication', () => {
