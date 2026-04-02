@@ -1,0 +1,32 @@
+import winston from 'winston'
+import "dotenv/config"
+
+const logger = winston.createLogger({
+  level: process.env.LOGGER_LEVEL || 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()
+  ),
+  transports: [
+    new winston.transports.File({ filename: 'logs/error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'logs/combined.log' })
+  ],
+  handleExceptions: true,
+  exitOnError: false
+})
+
+const myFormat = winston.format.printf(({ level, message, timestamp }) => {
+  return `${timestamp} [${level.toUpperCase()}]: ${message}`
+})
+
+if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
+  logger.add(new winston.transports.Console({
+    format: winston.format.combine(
+      winston.format.colorize(),
+      myFormat
+    ),
+    handleExceptions: true
+  }))
+}
+
+export default logger;

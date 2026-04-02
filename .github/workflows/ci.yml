@@ -1,0 +1,72 @@
+name: Ecommerce_CI
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      PORT: 8090
+      NODE_ENV: test
+      DB_HOST: localhost
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB: _ecommerce_test
+      JWT_SECRET: my_jwt_secret_key_is=verySecret
+      JWT_EXPIRES_IN: 23h
+      LOGGER_LEVEL: info
+
+    steps:
+      - name: Chcekout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Waiting for postgres to be ready
+        run: |
+          until pg_isready -h localhost -p 5432 -U postgres; do
+            echo "Waiting for PostgreSQL to be ready..."
+            sleep 2
+          done
+
+      - name: Run migrations
+        run: npm run migrate:test
+
+      - name: Waiting for redis to be ready
+        run: |
+          until redis-cli -h localhost -p 6379 ping | grep PONG; do
+            echo "Waiting for Redis to be ready..."
+            sleep 2
+          done
+
+      - name: Run tests
+        run: npm test
