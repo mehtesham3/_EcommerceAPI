@@ -11,13 +11,17 @@ jobs:
     services:
       postgres:
         image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ecommerce_test
         ports:
           - 5432:5432
         options: >-
           --health-cmd="pg_isready -U postgres"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
       redis:
         image: redis:7
@@ -25,16 +29,16 @@ jobs:
           - 6379:6379
         options: >-
           --health-cmd="redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
     env:
       PORT: 8090
       NODE_ENV: test
       DB_HOST: localhost
       DB_USER: postgres
       DB_PASSWORD: postgres
-      DB: _ecommerce_test
+      DB: ecommerce_test
       JWT_SECRET: my_jwt_secret_key_is=verySecret
       JWT_EXPIRES_IN: 23h
       LOGGER_LEVEL: info
@@ -50,6 +54,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Debug containers
+        run: docker ps -a
 
       - name: Waiting for postgres to be ready
         run: |
