@@ -7,27 +7,31 @@ This project demonstrates **real-world backend architecture**, including caching
 
 # 🚀 Features
 
-* 🔐 JWT Authentication (User, Vendor, Admin roles)
-* 📦 Product Management (Vendor & Admin control)
-* 🧾 Order & Order Items System
-* ⚡ Redis Caching for performance optimization
-* 🔄 Cache Invalidation Strategy
-* 🧠 Advanced Business Logic (data consistency across tables)
-* 🔗 Relational Database Design (PostgreSQL)
-* 🚀 Bulk Operations Support
-* 🛡️ Rate Limiting for security
+- 🔐 JWT Authentication (User, Vendor, Admin roles)
+- 📦 Product Management (Vendor & Admin control)
+- 🧾 Order & Order Items System
+- ⚡ Redis Caching for performance optimization
+- 🔄 Cache Invalidation Strategy
+- 🧠 Advanced Business Logic (data consistency across tables)
+- 🔗 Relational Database Design (PostgreSQL)
+- 🚀 Bulk Operations Support
+- 🛡️ Rate Limiting for security
+- 🧪 Automated Testing (Jest + Supertest)
+- ⚙️ CI Pipeline with GitHub Actions
 
 ---
 
 # 🛠️ Tech Stack
 
-* Node.js
-* Express.js
-* PostgreSQL
-* Knex.js
-* Redis
-* JWT (Authentication)
-* Bcrypt (Password Hashing)
+- Node.js
+- Express.js
+- PostgreSQL
+- Knex.js
+- Redis
+- JWT (Authentication)
+- Bcrypt (Password Hashing)
+- Jest (Testing)
+- Supertest (API Testing)
 
 ---
 
@@ -53,11 +57,10 @@ This project demonstrates **real-world backend architecture**, including caching
 
 ## 🔐 Security
 
-* Passwords hashed using **bcrypt**
-* JWT-based authentication
-* Rate limiting:
-
-  * ❗ Max **5 failed login attempts**
+- Passwords hashed using **bcrypt**
+- JWT-based authentication
+- Rate limiting:
+  - ❗ Max **5 failed login attempts**
 
 ---
 
@@ -97,7 +100,7 @@ This project demonstrates **real-world backend architecture**, including caching
 
 ### ✅ Implemented For:
 
-* Public products route
+- Public products route
 
 ### 🔁 Flow:
 
@@ -111,10 +114,10 @@ This project demonstrates **real-world backend architecture**, including caching
 
 Cache is **automatically cleared** when:
 
-* Product price is updated
-* Product stock is updated
-* Product is deleted
-* Product is activated/deactivated
+- Product price is updated
+- Product stock is updated
+- Product is deleted
+- Product is activated/deactivated
 
 👉 Ensures **fresh and consistent data**
 
@@ -163,9 +166,9 @@ POST /order/orderItems/bulk/:orderId
 
 ### Description:
 
-* Allows adding **multiple products in a single request**
-* Reduces API calls
-* Improves performance
+- Allows adding **multiple products in a single request**
+- Reduces API calls
+- Improves performance
 
 ### Example Request:
 
@@ -186,22 +189,22 @@ POST /order/orderItems/bulk/:orderId
 
 When:
 
-* Product price changes
-* Product stock changes
-* Product is deleted
+- Product price changes
+- Product stock changes
+- Product is deleted
 
 👉 Then:
 
-* Related **order totals are recalculated**
-* Dependent data is updated accordingly
+- Related **order totals are recalculated**
+- Dependent data is updated accordingly
 
 ---
 
 ## ✅ Example Logic
 
-* If product price increases → order total increases
-* If product deleted → remove from order → update total
-* If quantity updated → total recalculated
+- If product price increases → order total increases
+- If product deleted → remove from order → update total
+- If quantity updated → total recalculated
 
 ---
 
@@ -209,9 +212,9 @@ When:
 
 ### Relationships:
 
-* **Users → Orders** (One-to-Many)
-* **Orders → Order Items** (One-to-Many)
-* **Products → Order Items** (One-to-Many)
+- **Users → Orders** (One-to-Many)
+- **Orders → Order Items** (One-to-Many)
+- **Products → Order Items** (One-to-Many)
 
 ---
 
@@ -224,6 +227,24 @@ When:
 | Admin    | Full system control   |
 
 ---
+
+# ⚙️ CI Pipeline
+
+This project uses GitHub Actions for Continuous Integration.
+
+## 🚀 Workflow:
+
+Code pushed to GitHub
+CI pipeline runs automatically
+PostgreSQL & Redis services start
+Migrations executed
+All tests run
+
+### 👉 Ensures:
+
+Code stability
+No breaking changes
+Production readiness
 
 # ⚙️ Setup Instructions
 
@@ -270,16 +291,15 @@ npm run dev
 
 ---
 
-
 # 📌 Conclusion
 
 This project demonstrates:
 
-* Advanced backend architecture
-* Redis caching & invalidation
-* Bulk operations
-* Data consistency handling
-* Secure authentication system
-* Real-world database relationships
+- Advanced backend architecture
+- Redis caching & invalidation
+- Bulk operations
+- Data consistency handling
+- Secure authentication system
+- Real-world database relationships
 
 ---
