@@ -68,12 +68,5 @@ jobs:
       - name: Run migrations
         run: npm run migrate:test
 
-      - name: Waiting for redis to be ready
-        run: |
-          until redis-cli -h localhost -p 6379 ping | grep PONG; do
-            echo "Waiting for Redis to be ready..."
-            sleep 2
-          done
-
       - name: Run tests
         run: npm test
