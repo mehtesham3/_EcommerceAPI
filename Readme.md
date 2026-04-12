@@ -250,6 +250,11 @@ Production readiness
 
 ### 1️⃣ Clone Repository
 
+```bash
+git clone https://github.com/mehtesham3/_EcommerceAPI
+cd _EcommeceAPI
+```
+
 ---
 
 ### 2️⃣ Install Dependencies
